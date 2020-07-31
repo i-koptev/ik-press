@@ -30,6 +30,13 @@ module.exports = {
                         perPage: 5, // default is 10
                         sortFields: `slug`, // default is date
                         sortOrder: `ASC`, // default is DESC
+                        limit:
+                            // process.env.NODE_ENV === `development`
+                            `development` === `development`
+                                ? // Lets just pull 50 posts in development to make it easy on ourselves.
+                                  35
+                                : // And then we can pull all posts in production
+                                  null,
                     },
                 },
                 reports: {
