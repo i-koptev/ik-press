@@ -4,11 +4,28 @@ import { graphql } from "gatsby"
 
 export default ({ pageContext, data }) => (
     <>
-        <pre>
-            --- src/wp-templates/archive/<b>Page.js</b> ---
-        </pre>
-        <pre>{JSON.stringify(pageContext, null, 4)}</pre>
-        {/* <pre>{JSON.stringify(data, null, 4)}</pre> */}
+        <div
+            style={{
+                fontSize: "10px",
+                backgroundColor: "#345",
+                color: "#eee",
+                padding: "1rem",
+            }}
+        >
+            <pre>
+                <b>Template:</b> {__filename}
+            </pre>
+            <pre>
+                <b>Page context:</b>
+                <br />
+                {JSON.stringify(pageContext, null, 2)}
+            </pre>
+            <pre>
+                <b>Page data:</b>
+                <br />
+                {JSON.stringify(data, null, 2)}
+            </pre>
+        </div>
         {data.allWpPage.nodes.map(node => (
             <div key={`${node.uri}+${node.title}`}>
                 <Link to={node.uri}>{node.title}</Link>

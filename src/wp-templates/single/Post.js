@@ -4,10 +4,28 @@ import Menu from "../../components/Menu/Menu"
 
 export default ({ pageContext, data }) => (
     <>
-        <pre>
-            --- src/wp-templates/single/<b>Post.js</b> ---
-        </pre>
-        <pre>{JSON.stringify(pageContext, null, 4)}</pre>
+        <div
+            style={{
+                fontSize: "10px",
+                backgroundColor: "#345",
+                color: "#eee",
+                padding: "1rem",
+            }}
+        >
+            <pre>
+                <b>Template:</b> {__filename}
+            </pre>
+            <pre>
+                <b>Page context:</b>
+                <br />
+                {JSON.stringify(pageContext, null, 2)}
+            </pre>
+            <pre>
+                <b>Page data:</b>
+                <br />
+                {JSON.stringify(data, null, 2)}
+            </pre>
+        </div>
         <Menu />
         <h1>{data.wpPost.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: data.wpPost.content }} />
