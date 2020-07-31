@@ -1,28 +1,6 @@
 {
   "reportType": "Archive report",
   "rejected": {
-    "Post": [
-      {
-        "template": null,
-        "id": null,
-        "type": "Post",
-        "kind": "archive",
-        "reason": "No matching template exists.",
-        "status": "Rejected",
-        "path": "/"
-      }
-    ],
-    "Page": [
-      {
-        "template": null,
-        "id": null,
-        "type": "Page",
-        "kind": "archive",
-        "reason": "No matching template exists.",
-        "status": "Rejected",
-        "path": "/page/"
-      }
-    ],
     "MediaItem": [
       {
         "template": null,
@@ -43,17 +21,6 @@
         "reason": "Archive routing is disabled for this type in gatsby-config.js.",
         "status": "Rejected",
         "path": "users"
-      }
-    ],
-    "Category": [
-      {
-        "template": null,
-        "id": null,
-        "type": "Category",
-        "kind": "archive",
-        "reason": "No matching template exists.",
-        "status": "Rejected",
-        "path": "/category/"
       }
     ],
     "Tag": [
@@ -79,5 +46,39 @@
       }
     ]
   },
-  "accepted": {}
+  "accepted": {
+    "Post": [
+      {
+        "template": ".\\src\\wp-templates\\archive\\Post.js",
+        "id": null,
+        "type": "Post",
+        "kind": "archive",
+        "reason": "Page was created with template.",
+        "status": "Accepted",
+        "path": "/blog/"
+      }
+    ],
+    "Page": [
+      {
+        "template": ".\\src\\wp-templates\\archive\\Page.js",
+        "id": null,
+        "type": "Page",
+        "kind": "archive",
+        "reason": "Page was created with template.",
+        "status": "Accepted",
+        "path": "/page/"
+      }
+    ],
+    "Category": [
+      {
+        "template": ".\\src\\wp-templates\\archive\\Category.js",
+        "id": null,
+        "type": "Category",
+        "kind": "archive",
+        "reason": "Page was created with template.",
+        "status": "Accepted",
+        "path": "/category/"
+      }
+    ]
+  }
 }
