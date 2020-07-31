@@ -16,6 +16,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "gatsby": "^2.23.12",
+    "gatsby-plugin-sharp": "^2.6.24",
     "gatsby-plugin-wordpress": "^0.1.4",
     "gatsby-transformer-sharp": "^2.5.12",
     "react": "^16.12.0",
