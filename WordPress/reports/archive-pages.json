@@ -1,0 +1,83 @@
+{
+  "reportType": "Archive report",
+  "rejected": {
+    "Post": [
+      {
+        "template": null,
+        "id": null,
+        "type": "Post",
+        "kind": "archive",
+        "reason": "No matching template exists.",
+        "status": "Rejected",
+        "path": "/"
+      }
+    ],
+    "Page": [
+      {
+        "template": null,
+        "id": null,
+        "type": "Page",
+        "kind": "archive",
+        "reason": "No matching template exists.",
+        "status": "Rejected",
+        "path": "/page/"
+      }
+    ],
+    "MediaItem": [
+      {
+        "template": null,
+        "id": null,
+        "type": "MediaItem",
+        "kind": "archive",
+        "reason": "No matching template exists.",
+        "status": "Rejected",
+        "path": "/attachment/"
+      }
+    ],
+    "User": [
+      {
+        "template": null,
+        "id": null,
+        "type": "User",
+        "kind": "archive",
+        "reason": "Archive routing is disabled for this type in gatsby-config.js.",
+        "status": "Rejected",
+        "path": "users"
+      }
+    ],
+    "Category": [
+      {
+        "template": null,
+        "id": null,
+        "type": "Category",
+        "kind": "archive",
+        "reason": "No matching template exists.",
+        "status": "Rejected",
+        "path": "/category/"
+      }
+    ],
+    "Tag": [
+      {
+        "template": null,
+        "id": null,
+        "type": "Tag",
+        "kind": "archive",
+        "reason": "No matching template exists.",
+        "status": "Rejected",
+        "path": "/tag/"
+      }
+    ],
+    "PostFormat": [
+      {
+        "template": null,
+        "id": null,
+        "type": "PostFormat",
+        "kind": "archive",
+        "reason": "Archive routing is disabled for this type in gatsby-config.js.",
+        "status": "Rejected",
+        "path": "/type/"
+      }
+    ]
+  },
+  "accepted": {}
+}
