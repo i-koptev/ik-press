@@ -58,6 +58,9 @@ typings/
 .cache/
 public
 
+#gatsby-plugin-wordpress cache
+.wordpress-cache
+
 # Mac files
 .DS_Store
 
