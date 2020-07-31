@@ -32,14 +32,13 @@ export default ({ pageContext, data }) => (
         ) : null}
 
         {data.wpPage.slug === `about` ? (
-            <h2>Dynamically determined - it is a About Page!</h2>
+            <h2>Dynamically determined - it is About Page!</h2>
         ) : (
-            <h2>Dynamically determined - it is !</h2>
+            <h2>Dynamically determined - it is '{data.wpPage.slug}'!</h2>
         )}
 
         <Menu />
         <h1>{data.wpPage.title}</h1>
-        <h1>{data.wpPage.slug}</h1>
         <div dangerouslySetInnerHTML={{ __html: data.wpPage.content }} />
     </>
 )
