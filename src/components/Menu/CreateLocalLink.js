@@ -5,8 +5,9 @@
  * @param wordPressUrl
  * @param blogURI
  */
-const CreateLocalLink = (menuItem, wordPressUrl, blogURI = "blog/") => {
-    const { url, connectedObject } = menuItem
+// const CreateLocalLink = (menuItem, wordPressUrl, blogURI = "blog/") => {
+const CreateLocalLink = (menuItem, wordPressUrl, blogURI = "") => {
+    const { url, connectedNode } = menuItem
 
     if (url === "#") {
         return null
@@ -19,7 +20,11 @@ const CreateLocalLink = (menuItem, wordPressUrl, blogURI = "blog/") => {
     /**
      * If it's a blog link, respect the users blogURI setting.
      */
-    if (connectedObject && connectedObject.__typename === "WPGraphQL_Post") {
+    if (
+        connectedNode &&
+        connectedNode.node.__typename === "WpPost" &&
+        blogURI
+    ) {
         newUri = blogURI + newUri
     }
 
