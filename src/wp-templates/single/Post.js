@@ -1,9 +1,11 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+
+import Layout from "../../components/Layout"
 import Menu from "../../components/Menu/Menu"
 
 export default ({ pageContext, data }) => (
-    <>
+    <Layout>
         <div
             style={{
                 fontSize: "10px",
@@ -29,7 +31,7 @@ export default ({ pageContext, data }) => (
         <Menu />
         <h1>{data.wpPost.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: data.wpPost.content }} />
-    </>
+    </Layout>
 )
 
 export const query = graphql`
