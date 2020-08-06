@@ -1,3 +1,4 @@
+const lessToJson = require("less-to-json")
 let activeEnv =
     process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
 
@@ -11,6 +12,21 @@ console.log(`This WordPress Endpoint is used: '${process.env.WORDPRESS_URL}'`)
 
 module.exports = {
     plugins: [
+        {
+            resolve: "gatsby-plugin-antd",
+            options: {
+                style: true,
+            },
+        },
+        {
+            resolve: "gatsby-plugin-less",
+            options: {
+                lessOptions: {
+                    javascriptEnabled: true,
+                    modifyVars: lessToJson("src/theme/antdVars.less"),
+                },
+            },
+        },
         {
             resolve: `gatsby-plugin-wordpress`,
             options: {

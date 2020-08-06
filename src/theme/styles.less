@@ -1,0 +1,35 @@
+@import "./test.less";
+
+@media only screen and (max-width: 600px) {
+    .ant-layout-header {
+        height: 120px;
+        line-height: 120px;
+        h1 {
+            color: white;
+        }
+    }
+}
+.test1 {
+    background-color: red;
+}
+.ant-layout-header {
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 @ikvar;
+}
+.container {
+    max-width: 500px;
+    padding: 0 24px;
+    @media only screen and (min-width: 540px) {
+        max-width: 500px;
+    }
+    @media only screen and (min-width: 960px) {
+        max-width: 900px;
+    }
+    @media only screen and (min-width: 1200px) {
+        max-width: 1140px;
+    }
+    margin: 0 auto;
+}
