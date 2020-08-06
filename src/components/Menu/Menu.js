@@ -4,14 +4,12 @@ import { StaticQuery, graphql } from "gatsby"
 import MenuItem from "./MenuItem"
 import "./menu.css"
 
-/**
- * Define MenuItem fragment and get all primary menu items.
- */
 const MENU_QUERY = graphql`
     fragment MenuFields on WpMenuItem {
+        id
+        parentId
         label
         url
-        id
         connectedNode {
             node {
                 __typename
@@ -23,31 +21,6 @@ const MENU_QUERY = graphql`
         allWpMenuItem(filter: { locations: { eq: PRIMARY } }) {
             nodes {
                 ...MenuFields
-                childItems {
-                    nodes {
-                        ...MenuFields
-                        childItems {
-                            nodes {
-                                ...MenuFields
-                                childItems {
-                                    nodes {
-                                        ...MenuFields
-                                        childItems {
-                                            nodes {
-                                                ...MenuFields
-                                                childItems {
-                                                    nodes {
-                                                        ...MenuFields
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
         wp {
@@ -57,10 +30,8 @@ const MENU_QUERY = graphql`
         }
     }
 `
-// ==================================================================
-
 const renderMenuItem = (menuItem, wordPressUrl) => {
-    if (menuItem.childItems && menuItem.childItems.nodes.length) {
+    if (menuItem.children && menuItem.children.length) {
         return renderSubMenu(menuItem)
     } else {
         return (
@@ -69,108 +40,71 @@ const renderMenuItem = (menuItem, wordPressUrl) => {
             </li>
         )
     }
-
-    // const link = createLocalLink(menuItem.url)
-    // if (menuItem.childItems && menuItem.childItems.nodes.length) {
-    //     return renderSubMenu(menuItem)
-    // } else {
-    //     return (
-    //         <li className="menu-item" key={menuItem.id}>
-    //             {link ? (
-    //                 <Link to={createLocalLink(menuItem.url)}>
-    //                     {menuItem.label}
-    //                 </Link>
-    //             ) : (
-    //                 menuItem.label
-    //             )}
-    //         </li>
-    //     )
-    // }
 }
 const renderSubMenu = (menuItem, wordPressUrl) => {
     return (
         <>
             <li key={menuItem.id}>
                 <MenuItem menuItem={menuItem} wordPressUrl={wordPressUrl} />
-
-                <ul>
-                    {menuItem.childItems.nodes.map(item =>
-                        renderMenuItem(item)
-                    )}
-                </ul>
+                <ul>{menuItem.children.map(item => renderMenuItem(item))}</ul>
             </li>
         </>
-        // <li className="has-subMenu menu-item" key={menuItem.id}>
-        //     {createLocalLink(menuItem.url) ? (
-        //         <Link to={createLocalLink(menuItem.url)}>{menuItem.label}</Link>
-        //     ) : (
-        //         menuItem.label
-        //     )}
-        //     <ul className="menuItemGroup">
-        //         {menuItem.childItems.nodes.map(item => renderMenuItem(item))}
-        //     </ul>
-        // </li>
     )
 }
-// ==================================================================
+//** ==========================================================================
+//* Jason Bahl's function --> https://docs.wpgraphql.com/getting-started/menus/
+//** ==========================================================================
+
+const flatListToHierarchical = (
+    data = [],
+    { idKey = "id", parentKey = "parentId", childrenKey = "children" } = {}
+) => {
+    const tree = []
+    const childrenOf = {}
+    data.forEach(item => {
+        const newItem = { ...item }
+        const { [idKey]: id, [parentKey]: parentId = 0 } = newItem
+        childrenOf[id] = childrenOf[id] || []
+        newItem[childrenKey] = childrenOf[id]
+        parentId
+            ? (childrenOf[parentId] = childrenOf[parentId] || []).push(newItem)
+            : tree.push(newItem)
+    })
+    return tree
+}
 
 const Menu = () => {
     return (
         <StaticQuery
             query={MENU_QUERY}
             render={data => {
-                // if (data.wpgraphql.menuItems) {
-                if (data.allWpMenuItem) {
-                    //   const wordPressUrl = data.wpgraphql.generalSettings.url
+                const hierarchicalMenu =
+                    data.allWpMenuItem && data.allWpMenuItem.nodes
+                        ? flatListToHierarchical(data.allWpMenuItem.nodes)
+                        : null
+                if (hierarchicalMenu) {
                     const wordPressUrl = data.wp.generalSettings.url
-
                     return (
                         <>
-                            {/* <ul>
-                                <li>
-                                    <a href="#">One</a>
-                                </li>
-                                <li>
-                                    <a href="#" aria-haspopup="true">
-                                        Two
-                                    </a>
-                                    <ul class="dropdown" aria-label="submenu">
-                                        <li>
-                                            <a href="#">Sub-1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Sub-2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Sub-3</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">Three</a>
-                                </li>
-                            </ul> */}
+                            <pre>
+                                {JSON.stringify(hierarchicalMenu, null, 2)}
+                            </pre>
+                            <pre>{JSON.stringify(data, null, 2)}</pre>
                             <nav role="navigation">
                                 <ul role="menu">
-                                    {data.allWpMenuItem.nodes &&
-                                        data.allWpMenuItem.nodes.map(
-                                            menuItem => {
-                                                if (
-                                                    menuItem.childItems.nodes
-                                                        .length
-                                                ) {
-                                                    return renderSubMenu(
-                                                        menuItem,
-                                                        wordPressUrl
-                                                    )
-                                                } else {
-                                                    return renderMenuItem(
-                                                        menuItem,
-                                                        wordPressUrl
-                                                    )
-                                                }
-                                            }
-                                        )}
+                                    {hierarchicalMenu.map(menuItem => {
+                                        if (menuItem.children.length) {
+                                            return renderSubMenu(
+                                                menuItem,
+                                                wordPressUrl
+                                            )
+                                        } else {
+                                            return renderMenuItem(
+                                                menuItem,
+                                                wordPressUrl
+                                            )
+                                        }
+                                    })}
                                 </ul>
                             </nav>
                         </>
