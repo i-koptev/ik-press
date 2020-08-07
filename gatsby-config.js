@@ -12,7 +12,8 @@ console.log(`This WordPress Endpoint is used: '${process.env.WORDPRESS_URL}'`)
 module.exports = {
     plugins: [
         {
-            resolve: `gatsby-plugin-wordpress`,
+            // resolve: `gatsby-plugin-wordpress`,
+            resolve: `gatsby-source-wordpress-experimental`,
             options: {
                 url: `${process.env.WORDPRESS_URL}/graphql`,
                 verbose: true,
