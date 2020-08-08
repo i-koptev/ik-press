@@ -5,8 +5,8 @@ module.exports = async ({ actions, graphql }) => {
         {
             allWpPost(sort: { fields: modifiedGmt, order: DESC }) {
                 nodes {
-                    uri
                     id
+                    uri
                 }
             }
         }
@@ -16,7 +16,7 @@ module.exports = async ({ actions, graphql }) => {
         data.allWpPost.nodes.map(async (node, i) => {
             await actions.createPage({
                 component: resolve(`./src/templates/Post/Post.js`),
-                path: node.uri,
+                path: `blog${node.uri}`,
                 context: {
                     id: node.id,
                     nextPostId: (data.allWpPost.nodes[i + 1] || {}).id,
