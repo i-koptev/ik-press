@@ -1,4 +1,12 @@
 const { resolve } = require(`path`)
+const fs = require("fs")
+const { dd } = require("dumper.js")
+const { dump } = require("dumper.js")
+
+const capitalize = s => {
+    if (typeof s !== "string") return ""
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 module.exports = async ({ actions, graphql }) => {
     const { data } = await graphql(/* GraphQL */ `
@@ -7,6 +15,7 @@ module.exports = async ({ actions, graphql }) => {
                 nodes {
                     id
                     uri
+                    slug
                     isFrontPage
                 }
             }
@@ -15,8 +24,37 @@ module.exports = async ({ actions, graphql }) => {
 
     await Promise.all(
         data.allWpPage.nodes.map(async (node, i) => {
+            const slugCapitalized = capitalize(node.slug)
+
+            const frontPageTemplate = resolve(
+                `./src/templates/FrontPage/FrontPage.js`
+            )
+            const existsFrontPageTemplate = fs.existsSync(frontPageTemplate)
+
+            const customTemplate = resolve(
+                `./src/templates/${slugCapitalized}/${slugCapitalized}.js`
+            )
+            const existsCustomTemplate = fs.existsSync(customTemplate)
+
+            const defaultTemplate = resolve(`./src/templates/Page/Page.js`)
+
+            var actualTemplate = null
+
+            switch (true) {
+                case node.isFrontPage && existsFrontPageTemplate:
+                    actualTemplate = frontPageTemplate
+                    break
+
+                case existsCustomTemplate:
+                    actualTemplate = customTemplate
+                    break
+
+                default:
+                    actualTemplate = defaultTemplate
+            }
+
             await actions.createPage({
-                component: resolve(`./src/templates/Page/Page.js`),
+                component: actualTemplate,
                 path: node.isFrontPage ? "/" : node.uri,
                 context: {
                     id: node.id,
