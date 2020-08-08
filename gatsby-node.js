@@ -9,7 +9,8 @@ const { dd } = require("dumper.js")
 const { dump } = require("dumper.js")
 
 const createBlog = require(`./create/createBlog`)
-const createPost = require(`./create/createPost`)
+const createPosts = require(`./create/createPosts`)
+const createPages = require(`./create/createPages`)
 // const createContentTypes = require(`./create/createContentTypes`)
 // const createCategories = require(`./create/createCategories`)
 // const createAuthors = require(`./create/createAuthors`)
@@ -47,7 +48,8 @@ exports.createPages = async props => {
 
     // await createContentTypes(props, { templates })
     await createBlog(props, { perPage, blogURI })
-    await createPost(props)
+    await createPosts(props)
+    await createPages(props)
     // await createCategories(props, { perPage })
     // await createAuthors(props, { perPage })
 }
