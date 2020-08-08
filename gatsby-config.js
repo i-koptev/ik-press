@@ -28,9 +28,9 @@ module.exports = {
                 },
                 type: {
                     Post: {
-                        perPage: 5, // default is 10
-                        sortFields: `slug`, // default is date
-                        sortOrder: `ASC`, // default is DESC
+                        // perPage: 5, // default is 10
+                        // sortFields: `slug`, // default is date
+                        // sortOrder: `ASC`, // default is DESC
                         limit:
                             // process.env.NODE_ENV === `development`
                             `development` === `development`
