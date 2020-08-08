@@ -33,7 +33,7 @@ module.exports = async ({ actions, graphql }, options) => {
             const chunkIds = nodesChunk.map(item => item.id)
             await actions.createPage({
                 component: resolve(`./src/templates/Blog/Blog.js`),
-                path: index === 0 ? blogURI : `${blogURI}${index + 1}/`,
+                path: index === 0 ? blogURI : `${blogURI}page/${index + 1}/`,
                 context: {
                     chunkPosts: chunkIds,
                     firstId: firstNode.id,
