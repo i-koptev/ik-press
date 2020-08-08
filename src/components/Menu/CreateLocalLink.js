@@ -6,7 +6,7 @@
  * @param blogURI
  */
 // const CreateLocalLink = (menuItem, wordPressUrl, blogURI = "blog/") => {
-const CreateLocalLink = (menuItem, wordPressUrl, blogURI = "") => {
+const CreateLocalLink = (menuItem, wordPressUrl, blogURI = `/blog`) => {
     const { url, connectedNode } = menuItem
 
     if (url === "#") {
@@ -16,6 +16,7 @@ const CreateLocalLink = (menuItem, wordPressUrl, blogURI = "") => {
      * Always want to pull of our API URL.
      */
     let newUri = url.replace(wordPressUrl, "")
+    console.log(newUri)
 
     /**
      * If it's a blog link, respect the users blogURI setting.
