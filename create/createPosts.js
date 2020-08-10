@@ -27,6 +27,34 @@ module.exports = async ({ actions, graphql }) => {
                     isFirstSingle: !!(data.allWpPost.nodes[i + 1] || {}).id,
                 },
             })
+            /* await actions.createPage({
+                component: resolve(`./src/templates/Post/Post.js`),
+                path: `en/blog${node.uri}`,
+                context: {
+                    lang: `en`,
+                    id: node.id,
+                    nextPostId: (data.allWpPost.nodes[i + 1] || {}).id,
+                    previousPostId: (data.allWpPost.nodes[i - 1] || {}).id,
+                    nextPostUri: (data.allWpPost.nodes[i + 1] || {}).uri,
+                    previousPostUri: (data.allWpPost.nodes[i - 1] || {}).uri,
+                    isLastSingle: !!(data.allWpPost.nodes[i - 1] || {}).id,
+                    isFirstSingle: !!(data.allWpPost.nodes[i + 1] || {}).id,
+                },
+            })
+            await actions.createPage({
+                component: resolve(`./src/templates/Post/Post.js`),
+                path: `ru/blog${node.uri}`,
+                context: {
+                    lang: `ru`,
+                    id: node.id,
+                    nextPostId: (data.allWpPost.nodes[i + 1] || {}).id,
+                    previousPostId: (data.allWpPost.nodes[i - 1] || {}).id,
+                    nextPostUri: (data.allWpPost.nodes[i + 1] || {}).uri,
+                    previousPostUri: (data.allWpPost.nodes[i - 1] || {}).uri,
+                    isLastSingle: !!(data.allWpPost.nodes[i - 1] || {}).id,
+                    isFirstSingle: !!(data.allWpPost.nodes[i + 1] || {}).id,
+                },
+            }) */
         })
     )
 }

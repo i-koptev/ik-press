@@ -66,6 +66,34 @@ module.exports = async ({ actions, graphql }) => {
                     isFirstSingle: !!(data.allWpPage.nodes[i + 1] || {}).id,
                 },
             })
+            /*  await actions.createPage({
+                component: actualTemplate,
+                path: node.isFrontPage ? "/" : `en${node.uri}`,
+                context: {
+                    lang: `en`,
+                    id: node.id,
+                    nextPageId: (data.allWpPage.nodes[i + 1] || {}).id,
+                    previousPageId: (data.allWpPage.nodes[i - 1] || {}).id,
+                    nextPageUri: (data.allWpPage.nodes[i + 1] || {}).uri,
+                    previousPageUri: (data.allWpPage.nodes[i - 1] || {}).uri,
+                    isLastSingle: !!(data.allWpPage.nodes[i - 1] || {}).id,
+                    isFirstSingle: !!(data.allWpPage.nodes[i + 1] || {}).id,
+                },
+            })
+            await actions.createPage({
+                component: actualTemplate,
+                path: node.isFrontPage ? "/" : `ru${node.uri}`,
+                context: {
+                    lang: `ru`,
+                    id: node.id,
+                    nextPageId: (data.allWpPage.nodes[i + 1] || {}).id,
+                    previousPageId: (data.allWpPage.nodes[i - 1] || {}).id,
+                    nextPageUri: (data.allWpPage.nodes[i + 1] || {}).uri,
+                    previousPageUri: (data.allWpPage.nodes[i - 1] || {}).uri,
+                    isLastSingle: !!(data.allWpPage.nodes[i - 1] || {}).id,
+                    isFirstSingle: !!(data.allWpPage.nodes[i + 1] || {}).id,
+                },
+            }) */
         })
     )
 }
