@@ -30,8 +30,11 @@ module.exports = async ({ actions, graphql }, options) => {
         }
     `)
 
-    data.allWpPage.nodes.forEach(page => {
-        // let pageId = page.id
+    const {
+        allWpPage: { nodes: allPages },
+    } = data
+
+    allPages.forEach(page => {
         page.translations.forEach(translation => {
             if (translation.language.locale === "lv")
                 LV[page.id] = translation.id
@@ -41,7 +44,7 @@ module.exports = async ({ actions, graphql }, options) => {
     })
 
     await Promise.all(
-        data.allWpPage.nodes.map(async (node, i) => {
+        allPages.map(async (node, i) => {
             const slugCapitalized = capitalize(node.slug)
 
             const frontPageTemplate = resolve(
@@ -77,10 +80,10 @@ module.exports = async ({ actions, graphql }, options) => {
                 context: {
                     lang: `en`,
                     id: node.id,
-                    nextPageId: (data.allWpPage.nodes[i + 1] || {}).id,
-                    previousPageId: (data.allWpPage.nodes[i - 1] || {}).id,
-                    isLastSingle: !!(data.allWpPage.nodes[i - 1] || {}).id,
-                    isFirstSingle: !!(data.allWpPage.nodes[i + 1] || {}).id,
+                    nextPageId: (allPages[i + 1] || {}).id,
+                    previousPageId: (allPages[i - 1] || {}).id,
+                    isLastSingle: !!(allPages[i - 1] || {}).id,
+                    isFirstSingle: !!(allPages[i + 1] || {}).id,
                 },
             })
 
@@ -90,16 +93,12 @@ module.exports = async ({ actions, graphql }, options) => {
                 context: {
                     lang: `en`,
                     id: node.id,
-                    nextPageId: (data.allWpPage.nodes[i + 1] || {}).id,
-                    previousPageId: (data.allWpPage.nodes[i - 1] || {}).id,
-                    isLastSingle: !!(data.allWpPage.nodes[i - 1] || {}).id,
-                    isFirstSingle: !!(data.allWpPage.nodes[i + 1] || {}).id,
+                    nextPageId: (allPages[i + 1] || {}).id,
+                    previousPageId: (allPages[i - 1] || {}).id,
+                    isLastSingle: !!(allPages[i - 1] || {}).id,
+                    isFirstSingle: !!(allPages[i + 1] || {}).id,
                 },
             })
-
-            // dump(EN)
-            // dump(data.allWpPage.nodes[i + 1].id)
-            // dd(EN[data.allWpPage.nodes[i + 1].id])
 
             await actions.createPage({
                 component: actualTemplate,
@@ -107,17 +106,17 @@ module.exports = async ({ actions, graphql }, options) => {
                 context: {
                     lang: `ru`,
                     id: RU[node.id],
-                    nextPageId: data.allWpPage.nodes[i + 1]
-                        ? RU[data.allWpPage.nodes[i + 1].id]
+                    nextPageId: allPages[i + 1]
+                        ? RU[allPages[i + 1].id]
                         : {}.id,
-                    previousPageId: data.allWpPage.nodes[i - 1]
-                        ? RU[data.allWpPage.nodes[i - 1].id]
+                    previousPageId: allPages[i - 1]
+                        ? RU[allPages[i - 1].id]
                         : {}.id,
-                    isLastSingle: data.allWpPage.nodes[i - 1]
-                        ? !!RU[data.allWpPage.nodes[i - 1].id]
+                    isLastSingle: allPages[i - 1]
+                        ? !!RU[allPages[i - 1].id]
                         : !!{}.id,
-                    isFirstSingle: data.allWpPage.nodes[i + 1]
-                        ? !!RU[data.allWpPage.nodes[i + 1].id]
+                    isFirstSingle: allPages[i + 1]
+                        ? !!RU[allPages[i + 1].id]
                         : !!{}.id,
                 },
             })
@@ -128,17 +127,17 @@ module.exports = async ({ actions, graphql }, options) => {
                 context: {
                     lang: `lv`,
                     id: LV[node.id],
-                    nextPageId: data.allWpPage.nodes[i + 1]
-                        ? LV[data.allWpPage.nodes[i + 1].id]
+                    nextPageId: allPages[i + 1]
+                        ? LV[allPages[i + 1].id]
                         : {}.id,
-                    previousPageId: data.allWpPage.nodes[i - 1]
-                        ? LV[data.allWpPage.nodes[i - 1].id]
+                    previousPageId: allPages[i - 1]
+                        ? LV[allPages[i - 1].id]
                         : {}.id,
-                    isLastSingle: data.allWpPage.nodes[i - 1]
-                        ? !!LV[data.allWpPage.nodes[i - 1].id]
+                    isLastSingle: allPages[i - 1]
+                        ? !!LV[allPages[i - 1].id]
                         : !!{}.id,
-                    isFirstSingle: data.allWpPage.nodes[i + 1]
-                        ? !!LV[data.allWpPage.nodes[i + 1].id]
+                    isFirstSingle: allPages[i + 1]
+                        ? !!LV[allPages[i + 1].id]
                         : !!{}.id,
                 },
             })
