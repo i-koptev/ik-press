@@ -108,16 +108,16 @@ module.exports = async ({ actions, graphql }, options) => {
                     id: EN[node.id],
                     nextPageId: data.allWpPage.nodes[i + 1]
                         ? EN[data.allWpPage.nodes[i + 1].id]
-                        : {}.id,
+                        : !!{}.id,
                     previousPageId: data.allWpPage.nodes[i - 1]
                         ? EN[data.allWpPage.nodes[i - 1].id]
                         : {}.id,
                     isLastSingle: data.allWpPage.nodes[i - 1]
                         ? !!EN[data.allWpPage.nodes[i - 1].id]
-                        : {}.id,
+                        : !!{}.id,
                     isFirstSingle: data.allWpPage.nodes[i + 1]
                         ? !!EN[data.allWpPage.nodes[i + 1].id]
-                        : {}.id,
+                        : !!{}.id,
                 },
             })
 
@@ -129,16 +129,16 @@ module.exports = async ({ actions, graphql }, options) => {
                     id: LV[node.id],
                     nextPageId: data.allWpPage.nodes[i + 1]
                         ? LV[data.allWpPage.nodes[i + 1].id]
-                        : {}.id,
+                        : !!{}.id,
                     previousPageId: data.allWpPage.nodes[i - 1]
                         ? LV[data.allWpPage.nodes[i - 1].id]
                         : {}.id,
                     isLastSingle: data.allWpPage.nodes[i - 1]
                         ? !!LV[data.allWpPage.nodes[i - 1].id]
-                        : {}.id,
+                        : !!{}.id,
                     isFirstSingle: data.allWpPage.nodes[i + 1]
                         ? !!LV[data.allWpPage.nodes[i + 1].id]
-                        : {}.id,
+                        : !!{}.id,
                 },
             })
         })
