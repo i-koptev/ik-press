@@ -14,8 +14,6 @@ const createPages = require(`./create/createPages`)
 // const createContentTypes = require(`./create/createContentTypes`)
 // const createCategories = require(`./create/createCategories`)
 // const createAuthors = require(`./create/createAuthors`)
-// const createPages = require("./create/createPages")
-// const createPosts = require("./create/createPosts")
 
 const getTemplates = () => {
     const sitePath = path.resolve(`./`)
@@ -45,13 +43,17 @@ exports.createPages = async props => {
     const perPage = wpSettings.wp.readingSettings.postsPerPage || 10
     const blogURI = "/blog/"
     const templates = getTemplates()
+    const LV = {}
+    const EN = {}
 
     // await createContentTypes(props, { templates })
     await createBlog(props, { perPage, blogURI })
-    await createPosts(props)
-    await createPages(props)
+    await createPosts(props, { EN, LV })
+    await createPages(props, { EN, LV })
     // await createCategories(props, { perPage })
     // await createAuthors(props, { perPage })
+    dump(EN)
+    dump(LV)
 }
 
 /* 
