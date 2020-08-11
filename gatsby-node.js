@@ -47,9 +47,9 @@ exports.createPages = async props => {
     const LV = {}
 
     // await createContentTypes(props, { templates })
-    await createBlog(props, { perPage, blogURI })
     await createPosts(props, { RU, LV })
     await createPages(props, { RU, LV })
+    await createBlog(props, { perPage, blogURI, RU, LV }) // order matters: use data from CreatePosts & createPages
     // await createCategories(props, { perPage })
     // await createAuthors(props, { perPage })
     dump(RU)
