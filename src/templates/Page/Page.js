@@ -1,29 +1,11 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
+import LangSwitcher from "../../components/LangSwitcher"
 
 const Page = ({ pageContext, data }) => {
-    let l = location.pathname
-    let prefixedWithLocale =
-        l.match(/^\/ru/) || l.match(/^\/en/) || l.match(/^\/lv/)
     return (
         <>
-            <Link
-                to={!prefixedWithLocale ? "/en" + l : l.replace(/ru|lv/i, "en")}
-            >
-                EN
-            </Link>
-            <br />
-            <Link
-                to={!prefixedWithLocale ? "/ru" + l : l.replace(/en|lv/i, "ru")}
-            >
-                RU
-            </Link>
-            <br />
-            <Link
-                to={!prefixedWithLocale ? "/lv" + l : l.replace(/en|ru/i, "lv")}
-            >
-                LV
-            </Link>
+            <LangSwitcher />
             <div
                 style={{
                     fontSize: "10px",
