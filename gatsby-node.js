@@ -43,16 +43,16 @@ exports.createPages = async props => {
     const perPage = wpSettings.wp.readingSettings.postsPerPage || 10
     const blogURI = "/blog/"
     const templates = getTemplates()
+    const RU = {}
     const LV = {}
-    const EN = {}
 
     // await createContentTypes(props, { templates })
     await createBlog(props, { perPage, blogURI })
-    await createPosts(props, { EN, LV })
-    await createPages(props, { EN, LV })
+    await createPosts(props, { RU, LV })
+    await createPages(props, { RU, LV })
     // await createCategories(props, { perPage })
     // await createAuthors(props, { perPage })
-    dump(EN)
+    dump(RU)
     dump(LV)
 }
 

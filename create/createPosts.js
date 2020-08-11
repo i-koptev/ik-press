@@ -26,10 +26,10 @@ module.exports = async ({ actions, graphql }, options) => {
     data.allWpPost.nodes.forEach(post => {
         // let pageId = page.id
         post.translations.forEach(translation => {
-            if (translation.language.locale === "lv")
+            if (translation.language.locale === "ru_RU")
+                RU[post.id] = translation.id
+            else if (translation.language.locale === "lv")
                 LV[post.id] = translation.id
-            else if (translation.language.locale === "en_US")
-                EN[post.id] = translation.id
         })
     })
 

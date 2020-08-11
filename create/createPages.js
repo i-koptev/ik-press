@@ -9,10 +9,10 @@ const capitalize = s => {
 }
 
 module.exports = async ({ actions, graphql }, options) => {
-    const { LV, EN } = options
+    const { RU, LV } = options
     const { data } = await graphql(/* GraphQL */ `
         query allDefaultLangPages {
-            allWpPage(filter: { language: { locale: { eq: "ru_RU" } } }) {
+            allWpPage(filter: { language: { locale: { eq: "en_US" } } }) {
                 nodes {
                     id
                     uri
@@ -35,8 +35,8 @@ module.exports = async ({ actions, graphql }, options) => {
         page.translations.forEach(translation => {
             if (translation.language.locale === "lv")
                 LV[page.id] = translation.id
-            else if (translation.language.locale === "en_US")
-                EN[page.id] = translation.id
+            else if (translation.language.locale === "ru_RU")
+                RU[page.id] = translation.id
         })
     })
 
@@ -75,6 +75,7 @@ module.exports = async ({ actions, graphql }, options) => {
                 component: actualTemplate,
                 path: node.isFrontPage ? "/" : node.uri,
                 context: {
+                    lang: `en`,
                     id: node.id,
                     nextPageId: (data.allWpPage.nodes[i + 1] || {}).id,
                     previousPageId: (data.allWpPage.nodes[i - 1] || {}).id,
@@ -85,9 +86,9 @@ module.exports = async ({ actions, graphql }, options) => {
 
             await actions.createPage({
                 component: actualTemplate,
-                path: node.isFrontPage ? `ru/` : `ru${node.uri}`,
+                path: node.isFrontPage ? `en/` : `en${node.uri}`,
                 context: {
-                    lang: `ru`,
+                    lang: `en`,
                     id: node.id,
                     nextPageId: (data.allWpPage.nodes[i + 1] || {}).id,
                     previousPageId: (data.allWpPage.nodes[i - 1] || {}).id,
@@ -102,21 +103,21 @@ module.exports = async ({ actions, graphql }, options) => {
 
             await actions.createPage({
                 component: actualTemplate,
-                path: node.isFrontPage ? "en/" : `en${node.uri}`,
+                path: node.isFrontPage ? "ru/" : `ru${node.uri}`,
                 context: {
-                    lang: `en`,
-                    id: EN[node.id],
+                    lang: `ru`,
+                    id: RU[node.id],
                     nextPageId: data.allWpPage.nodes[i + 1]
-                        ? EN[data.allWpPage.nodes[i + 1].id]
-                        : !!{}.id,
+                        ? RU[data.allWpPage.nodes[i + 1].id]
+                        : {}.id,
                     previousPageId: data.allWpPage.nodes[i - 1]
-                        ? EN[data.allWpPage.nodes[i - 1].id]
+                        ? RU[data.allWpPage.nodes[i - 1].id]
                         : {}.id,
                     isLastSingle: data.allWpPage.nodes[i - 1]
-                        ? !!EN[data.allWpPage.nodes[i - 1].id]
+                        ? !!RU[data.allWpPage.nodes[i - 1].id]
                         : !!{}.id,
                     isFirstSingle: data.allWpPage.nodes[i + 1]
-                        ? !!EN[data.allWpPage.nodes[i + 1].id]
+                        ? !!RU[data.allWpPage.nodes[i + 1].id]
                         : !!{}.id,
                 },
             })
@@ -129,7 +130,7 @@ module.exports = async ({ actions, graphql }, options) => {
                     id: LV[node.id],
                     nextPageId: data.allWpPage.nodes[i + 1]
                         ? LV[data.allWpPage.nodes[i + 1].id]
-                        : !!{}.id,
+                        : {}.id,
                     previousPageId: data.allWpPage.nodes[i - 1]
                         ? LV[data.allWpPage.nodes[i - 1].id]
                         : {}.id,
