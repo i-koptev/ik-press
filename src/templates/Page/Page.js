@@ -1,8 +1,29 @@
 import React from "react"
+import { graphql, Link } from "gatsby"
 
 const Page = ({ pageContext, data }) => {
+    let l = location.pathname
+    let prefixedWithLocale =
+        l.match(/^\/ru/) || l.match(/^\/en/) || l.match(/^\/lv/)
     return (
         <>
+            <Link
+                to={!prefixedWithLocale ? "/en" + l : l.replace(/ru|lv/i, "en")}
+            >
+                EN
+            </Link>
+            <br />
+            <Link
+                to={!prefixedWithLocale ? "/ru" + l : l.replace(/en|lv/i, "ru")}
+            >
+                RU
+            </Link>
+            <br />
+            <Link
+                to={!prefixedWithLocale ? "/lv" + l : l.replace(/en|ru/i, "lv")}
+            >
+                LV
+            </Link>
             <div
                 style={{
                     fontSize: "10px",
@@ -25,8 +46,24 @@ const Page = ({ pageContext, data }) => {
                     {JSON.stringify(data, null, 2)}
                 </pre>
             </div>
+            <h1>{data.wpPage.title}</h1>
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: data.wpPage.title,
+                }}
+            ></div>
         </>
     )
 }
 
 export default Page
+
+export const postPageQuery = graphql`
+    query pageByID($id: String!) {
+        wpPage(id: { eq: $id }) {
+            id
+            title
+            content
+        }
+    }
+`

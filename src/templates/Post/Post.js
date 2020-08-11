@@ -3,20 +3,29 @@ import { Link } from "gatsby"
 
 const Post = ({ pageContext, data, location }) => {
     let l = location.pathname
-    let prefixedWithLocale = l.match(/^\/ru/) || l.match(/^\/en/)
-    const { languages, originalPath } = useI18next()
+    l.match(/^\/ru/) || l.match(/^\/en/) || l.match(/^\/lv/)
 
     return (
         <>
-            <Link to={!prefixedWithLocale ? "/en" + l : l.replace("ru", "en")}>
+            <Link
+                to={!prefixedWithLocale ? "/en" + l : l.replace(/ru|lv/i, "en")}
+            >
                 EN
             </Link>
             <br />
-            <Link to={!prefixedWithLocale ? "/ru" + l : l.replace("en", "ru")}>
+            <Link
+                to={!prefixedWithLocale ? "/ru" + l : l.replace(/en|lv/i, "ru")}
+            >
                 RU
             </Link>
-            <pre>{JSON.stringify(originalPath, null, 2)}</pre>
+            <br />
+            <Link
+                to={!prefixedWithLocale ? "/lv" + l : l.replace(/en|ru/i, "lv")}
+            >
+                LV
+            </Link>
 
+            <pre>{JSON.stringify(originalPath, null, 2)}</pre>
             <div
                 style={{
                     fontSize: "10px",
