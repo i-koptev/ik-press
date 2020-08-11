@@ -1,8 +1,10 @@
 import React from "react"
+import LangSwitcher from "../../components/LangSwitcher"
 
 const Page1 = ({ pageContext, data }) => {
     return (
         <>
+            <LangSwitcher />
             <div
                 style={{
                     fontSize: "10px",
