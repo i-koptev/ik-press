@@ -25,13 +25,18 @@ const Page = ({ pageContext, data }) => {
                 <pre>
                     <b>Page data:</b>
                     <br />
-                    {JSON.stringify(data, null, 2)}
+                    {/* {JSON.stringify(data, null, 2)} */}
                 </pre>
             </div>
             <h1>{data.wpPage.title}</h1>
             <div
                 dangerouslySetInnerHTML={{
                     __html: data.wpPage.title,
+                }}
+            ></div>
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: data.wpPage.content,
                 }}
             ></div>
         </>
