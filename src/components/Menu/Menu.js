@@ -18,7 +18,7 @@ const MENU_QUERY = graphql`
     }
 
     query GETMAINMENU {
-        allWpMenuItem(filter: { locations: { eq: PRIMARY } }) {
+        allWpMenuItem(filter: { locations: { eq: PRIMARY___EN } }) {
             nodes {
                 ...MenuFields
             }
@@ -87,9 +87,14 @@ const Menu = () => {
                     return (
                         <>
                             <pre>
-                                {JSON.stringify(hierarchicalMenu, null, 2)}
+                                {/* {JSON.stringify(
+                                    data.allWpMenuItem.nodes,
+                                    null,
+                                    2
+                                )} */}
+                                {/* {JSON.stringify(hierarchicalMenu, null, 2)} */}
                             </pre>
-                            <pre>{JSON.stringify(data, null, 2)}</pre>
+                            {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
                             <nav role="navigation">
                                 <ul role="menu">
                                     {hierarchicalMenu.map(menuItem => {
