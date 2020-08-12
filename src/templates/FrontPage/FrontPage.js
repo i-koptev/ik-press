@@ -1,8 +1,12 @@
 import React from "react"
+import Layout from "../../components/Layout"
+
+import LangSwitcher from "../../components/LangSwitcher"
 
 const FrontPage = ({ pageContext, data }) => {
     return (
-        <>
+        <Layout>
+            <LangSwitcher />
             <div
                 style={{
                     fontSize: "10px",
@@ -25,7 +29,10 @@ const FrontPage = ({ pageContext, data }) => {
                     {JSON.stringify(data, null, 2)}
                 </pre>
             </div>
-        </>
+            {pageContext.lang === "en" ? <h3>English</h3> : null}
+            {pageContext.lang === "lv" ? <h3>Latviesu</h3> : null}
+            {pageContext.lang === "ru" ? <h3>Русский</h3> : null}
+        </Layout>
     )
 }
 

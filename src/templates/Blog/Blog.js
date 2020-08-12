@@ -1,9 +1,11 @@
 import React from "react"
+import Layout from "../../components/Layout"
+
 import LangSwitcher from "../../components/LangSwitcher"
 
 const Blog = ({ pageContext, data }) => {
     return (
-        <>
+        <Layout>
             <LangSwitcher />
 
             <div
@@ -28,7 +30,7 @@ const Blog = ({ pageContext, data }) => {
                     {JSON.stringify(data, null, 2)}
                 </pre>
             </div>
-        </>
+        </Layout>
     )
 }
 

@@ -1,10 +1,12 @@
 import React from "react"
 import { Link } from "gatsby"
+import Layout from "../../components/Layout"
+
 import LangSwitcher from "../../components/LangSwitcher"
 
 const Post = ({ pageContext, data }) => {
     return (
-        <>
+        <Layout>
             <LangSwitcher />
 
             <div
@@ -34,8 +36,31 @@ const Post = ({ pageContext, data }) => {
                     {JSON.stringify(data, null, 2)}
                 </pre>
             </div>
-        </>
+        </Layout>
     )
 }
 
 export default Post
+
+export const postById = graphql`
+    query postByID($id: String!, $previousPostId: String, $nextPostId: String) {
+        thisPost: wpPost(id: { eq: $id }) {
+            slug
+            uri
+            title
+            content
+        }
+        nextPost: wpPost(id: { eq: $nextPostId }) {
+            slug
+            uri
+            title
+            content
+        }
+        previousPost: wpPost(id: { eq: $previousPostId }) {
+            slug
+            uri
+            title
+            content
+        }
+    }
+`

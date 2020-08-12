@@ -1,10 +1,11 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import LangSwitcher from "../../components/LangSwitcher"
+import Layout from "../../components/Layout"
 
 const Page = ({ pageContext, data }) => {
     return (
-        <>
+        <Layout>
             <LangSwitcher />
             <div
                 style={{
@@ -39,7 +40,7 @@ const Page = ({ pageContext, data }) => {
                     __html: data.wpPage.content,
                 }}
             ></div>
-        </>
+        </Layout>
     )
 }
 
