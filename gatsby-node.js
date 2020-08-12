@@ -19,6 +19,26 @@ const getTemplates = () => {
     const sitePath = path.resolve(`./`)
     return glob.sync(`./src/templates/**/*.js`, { cwd: sitePath })
 }
+
+const siteLanguages = {
+    languages: [`en`, `ru`, `lv`],
+    defaultLanguage: `en`,
+    locales: {
+        ru: `ru_RU`,
+        en: `en_US`,
+        lv: `lv`,
+    },
+}
+const languageHash = {}
+siteLanguages.languages.forEach(item => {
+    languageHash[siteLanguages.locales[item]] = {}
+})
+
+const allLanguages = siteLanguages.languages
+const defaultLanguage = siteLanguages.defaultLanguage
+const locales = siteLanguages.locales
+const defaultLanguageLocale = siteLanguages.locales[defaultLanguage]
+
 // dd(getTemplates())
 
 // exports.createPagesStatefully = async (
@@ -43,17 +63,40 @@ exports.createPages = async props => {
     const perPage = wpSettings.wp.readingSettings.postsPerPage || 10
     const blogURI = "/blog/"
     const templates = getTemplates()
-    const RU = {}
-    const LV = {}
 
     // await createContentTypes(props, { templates })
-    await createPosts(props, { RU, LV })
-    await createPages(props, { RU, LV })
-    await createBlog(props, { perPage, blogURI, RU, LV }) // order matters: use data from CreatePosts & createPages
+    await createPosts(props, {
+        allLanguages,
+        defaultLanguage,
+        defaultLanguageLocale,
+        locales,
+        languageHash,
+    })
+    await createPages(props, {
+        allLanguages,
+        defaultLanguage,
+        defaultLanguageLocale,
+        locales,
+        languageHash,
+    })
+    await createBlog(props, {
+        perPage,
+        blogURI,
+        allLanguages,
+        defaultLanguage,
+        defaultLanguageLocale,
+        locales,
+        languageHash,
+    }) // order matters: use data from CreatePosts & createPages
     // await createCategories(props, { perPage })
     // await createAuthors(props, { perPage })
-    dump(RU)
-    dump(LV)
+
+    dump("-*-*-*-*-*- ✨✨✨✨✨✨✨✨✨ -*-*-*-*-*-")
+    dump("-*-*-*-*-*-      GATSBY-NODE     -*-*-*-*-*-")
+    dump("-*-*-*-*-*- ✨✨✨✨✨✨✨✨✨ -*-*-*-*-*-")
+    dump("-*-*-*-*-*- LANGUAGE HASH CREATED -*-*-*-*-*-")
+    dump("-*-*-*-*-*- ✨✨✨✨✨✨✨✨✨ -*-*-*-*-*-")
+    dump(languageHash)
 }
 
 /* 
