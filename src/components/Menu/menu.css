@@ -20,10 +20,12 @@ li {
     background: #333;
     display: block;
     float: left;
-    padding: 1rem;
+    padding: 0.3rem;
     position: relative;
     text-decoration: none;
     transition-duration: 0.5s;
+    margin-left: 3px;
+    margin-top: 3px;
 }
 
 li a {
