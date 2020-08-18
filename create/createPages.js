@@ -32,6 +32,7 @@ module.exports = async ({ actions, graphql }, options) => {
                         uri
                         language {
                             locale
+                            slug
                         }
                     }
                 }
@@ -43,12 +44,26 @@ module.exports = async ({ actions, graphql }, options) => {
         allWpPage: { nodes: allPages },
     } = data
 
+    //https://gist.github.com/jens1101/9f3faa6c2dae23537257f1c3d0afdfdf
+    function removeTrailingSlashes(url) {
+        return url.replace(/\/+$/, "") //Removes one or more trailing slashes from URL
+    }
+
+    const idToGatsbyUriHash = {}
+
     allPages.forEach(page => {
+        let pageUri = page.uri
+        idToGatsbyUriHash[page.id] = pageUri
         page.translations.forEach(translation => {
+            let pageUriWithLocale = `/${removeTrailingSlashes(
+                translation.language.slug
+            )}${pageUri}`
+            idToGatsbyUriHash[translation.id] = pageUriWithLocale
             languageHash[translation.language.locale][page.id] = translation.id
         })
     })
 
+    // dd(idToGatsbyUriHash)
     await Promise.all(
         allPages.map(async (node, i) => {
             const slugCapitalized = capitalize(node.slug)
@@ -89,6 +104,12 @@ module.exports = async ({ actions, graphql }, options) => {
                             id: node.id,
                             nextPageId: (allPages[i + 1] || {}).id,
                             previousPageId: (allPages[i - 1] || {}).id,
+
+                            nextPageUri:
+                                idToGatsbyUriHash[(allPages[i + 1] || {}).id],
+                            previousPageUri:
+                                idToGatsbyUriHash[(allPages[i - 1] || {}).id],
+
                             isLastSingle: !!(allPages[i - 1] || {}).id,
                             isFirstSingle: !!(allPages[i + 1] || {}).id,
                         },
@@ -104,6 +125,12 @@ module.exports = async ({ actions, graphql }, options) => {
                             id: node.id,
                             nextPageId: (allPages[i + 1] || {}).id,
                             previousPageId: (allPages[i - 1] || {}).id,
+
+                            nextPageUri:
+                                idToGatsbyUriHash[(allPages[i + 1] || {}).id],
+                            previousPageUri:
+                                idToGatsbyUriHash[(allPages[i - 1] || {}).id],
+
                             isLastSingle: !!(allPages[i - 1] || {}).id,
                             isFirstSingle: !!(allPages[i + 1] || {}).id,
                         },
@@ -127,6 +154,22 @@ module.exports = async ({ actions, graphql }, options) => {
                                       allPages[i - 1].id
                                   ]
                                 : {}.id,
+
+                            nextPageUri: allPages[i + 1]
+                                ? idToGatsbyUriHash[
+                                      languageHash[locales[language]][
+                                          allPages[i + 1].id
+                                      ]
+                                  ]
+                                : {}.id,
+                            previousPageUri: allPages[i - 1]
+                                ? idToGatsbyUriHash[
+                                      languageHash[locales[language]][
+                                          allPages[i - 1].id
+                                      ]
+                                  ]
+                                : {}.id,
+
                             isLastSingle: allPages[i - 1]
                                 ? !!languageHash[locales[language]][
                                       allPages[i - 1].id
