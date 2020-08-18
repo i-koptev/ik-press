@@ -7,8 +7,6 @@ const LangSwitcher = () => {
         l.match(/^\/ru/) || l.match(/^\/en/) || l.match(/^\/lv/)
     return (
         <div>
-            <pre>{JSON.stringify(l, null, 2)}</pre>
-
             <Link
                 to={!prefixedWithLocale ? "/en" + l : l.replace(/ru|lv/i, "en")}
             >
