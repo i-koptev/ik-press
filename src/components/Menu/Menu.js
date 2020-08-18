@@ -18,7 +18,7 @@ const MENU_QUERY = graphql`
     }
 
     query GETMAINMENU {
-        allWpMenuItem(filter: { locations: { eq: PRIMARY___EN } }) {
+        allWpMenuItem(filter: { locations: { eq: PRIMARY } }) {
             nodes {
                 ...MenuFields
             }
